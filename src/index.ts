@@ -13,7 +13,7 @@ async function main() {
     // ts-node catches this, but node on the built output does not :shrug:
     try {
         // @ts-expect-error -- TS is complaining of a type error, but node gives a runtime error about the import assertion missing.
-        const jsonModuleDynamicImport: { "foo": string } = await import('./jsonModule.json');
+        const jsonModuleDynamicImport: { "foo": string } = await import('./jsonModule.json', { with: { type: 'json' } });
         console.log('contents of JSON module when `await import`ing', jsonModuleDynamicImport)
 
     } catch (e) {
@@ -35,4 +35,8 @@ async function main() {
 
 main();
 
-export {}
+function helloFromMain() {
+    return 'hello from main';
+}
+
+export { helloFromMain }

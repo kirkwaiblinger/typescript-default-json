@@ -1,16 +1,15 @@
 import staticDefaultImport from '../src/jsonModule.json';
 import * as staticNamespaceImport from '../src/jsonModule.json';
 
+import * as mainModule from '../src/index';
 
 describe('the test suite', () => {
     it('should equal foobar when dynamic importing', async () => {
-        // @ts-expect-error -- this is the runtime behavior but TS doesn't let me write it
         const jsonModuleDynamicImport: { "foo": string } = await import('../src/jsonModule.json');
-        expect(jsonModuleDynamicImport).toEqual({ "foo": "bar" });
+        expect(jsonModuleDynamicImport).toEqual({ "foo": "bar", "default": { "foo": "bar"} });
     })
 
     it('should equal default: foobar when dynamic importing', async () => {
-        // this is not the runtime behavior. this test fails.
         const jsonModuleDynamicImport: { "foo": string } = (await import('../src/jsonModule.json')).default;
         expect(jsonModuleDynamicImport).toEqual({ "foo": "bar" });
     })
@@ -30,4 +29,8 @@ describe('the test suite', () => {
         staticNamespaceImport satisfies { "foo": string };
         expect(staticNamespaceImport).toEqual({ "foo": "bar" });
     })
+
+    it('should print intercepted', () => {
+        expect(mainModule.helloFromMain()).toEqual('intercepted!');
+    });
 })
