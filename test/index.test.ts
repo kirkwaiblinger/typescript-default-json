@@ -4,12 +4,13 @@ import * as staticNamespaceImport from '../src/jsonModule.json';
 
 describe('the test suite', () => {
     it('should equal foobar when dynamic importing', async () => {
-        // @ts-expect-error
+        // @ts-expect-error -- this is the runtime behavior but TS doesn't let me write it
         const jsonModuleDynamicImport: { "foo": string } = await import('../src/jsonModule.json');
         expect(jsonModuleDynamicImport).toEqual({ "foo": "bar" });
     })
 
     it('should equal default: foobar when dynamic importing', async () => {
+        // this is not the runtime behavior. this test fails.
         const jsonModuleDynamicImport: { "foo": string } = (await import('../src/jsonModule.json')).default;
         expect(jsonModuleDynamicImport).toEqual({ "foo": "bar" });
     })
@@ -20,6 +21,7 @@ describe('the test suite', () => {
     })
 
     it('should be typed correctly as a static default import', () => {
+        // this is undefined at runtime??
         staticDefaultImport satisfies { "foo": string };
         expect(staticDefaultImport).toEqual({ "foo": "bar" });
     })
