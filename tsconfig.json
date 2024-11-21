@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"module": "node16",
+		"target": "ES2022",
+		"resolveJsonModule": true,
+		"declaration": false,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
+		"outDir": "dist",
+		"noEmit": false
+	},
+	"include": ["src", "test"]
+}
